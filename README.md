@@ -7,6 +7,10 @@ this wrapper will take those payloads and output them in the following files:
 * cert.pem
 * cert-key.pem
 
+# Installation
+
+    pip install vault-pki-extractor
+
 # Usage
 
 ## extract
@@ -19,6 +23,8 @@ the file in with `--input`.
     vault-pki-extractor extract --url some_url --token some_token --cn some_common_name
 
 Alternatively, VPE will use `requests` to call your vault server and do the needful.
+
+The destination of your certificates is `/tmp/data`, but this can be changed with `--build-dir`.
 
 ## report
 
