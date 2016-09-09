@@ -17,15 +17,24 @@ def cli(ctx, debug):
 @click.option('--input', type=click.File('rb'), required=False)
 @click.option('--url', required=False)
 @click.option('--token', default=None)
+@click.option('--ip', default=None)
 @click.option('--cn', default=None)
-def report(ctx, input, url, token, cn):
+def report(ctx, input, url, token, ip, cn):
     _input = ''
     if url and token and cn:
         import requests
+        params = {}
+
+        if cn:
+            params['common_name'] = cn
+
+        if ip:
+            params['ip_sans'] = ip
+
         r = requests.post(
             url,
             headers={'X-Vault-Token': token},
-            data=json.dumps({'common_name': cn}),
+            data=json.dumps(params),
         )
         _input = r.text
         print _input
@@ -47,18 +56,28 @@ def report(ctx, input, url, token, cn):
 @click.option('--url', required=False)
 @click.option('--token', default=None)
 @click.option('--cn', default=None)
+@click.option('--ip', default=None)
 @click.option('--data-dir', default='/tmp/data')
-def extract(ctx, input, url, token, cn, data_dir):
+def extract(ctx, input, url, token, cn, ip, data_dir):
     if not os.path.exists(data_dir):
         os.mkdir(data_dir)
 
     _input = ''
-    if url and token and cn:
+    if url and token:
         import requests
+
+        params = {}
+
+        if cn:
+            params['common_name'] = cn
+
+        if ip:
+            params['ip_sans'] = ip
+
         r = requests.post(
             url,
             headers={'X-Vault-Token': token},
-            data=json.dumps({'common_name': cn}),
+            data=json.dumps(params),
         )
         _input = r.text
     else:
