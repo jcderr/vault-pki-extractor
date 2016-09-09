@@ -11,6 +11,13 @@ this wrapper will take those payloads and output them in the following files:
 
     pip install vault-pki-extractor
 
+# Docker
+
+Alternatively, you can run this in docker.
+
+    docker run --rm -v ${PWD}:/tmp/data jcderr/vault-pki-extractor vault-pki-extractor \
+        extract --url https://your.vault/v1/pki/issue/somerole --token your-token --cn your.domain
+
 # Usage
 
 ## extract
