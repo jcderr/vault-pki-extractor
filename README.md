@@ -11,12 +11,12 @@ this wrapper will take those payloads and output them in the following files:
 
 ## extract
 
-    vault-pki-extractor export --input filename
+    vault-pki-extractor extract --input filename
 
 If you already have the JSON payload saved to file (curl -o ...), you can pass
 the file in with `--input`.
 
-    vault-pki-extractor export --url some_url --token some_token --cn some_common_name
+    vault-pki-extractor extract --url some_url --token some_token --cn some_common_name
 
 Alternatively, VPE will use `requests` to call your vault server and do the needful.
 
