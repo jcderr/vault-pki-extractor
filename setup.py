@@ -2,8 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='vault-pki-extractor',
-    version='1.0.1',
+    version='1.0.2',
     packages=find_packages(),
+    author='Jeremy Derr',
+    author_email='jeremy@derr.me',
     include_package_data=True,
     install_requires=[
         'Click==6.6',
