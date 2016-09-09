@@ -1,5 +1,7 @@
-import click
+import os
 import json
+
+import click
 
 from extractor import utils
 
@@ -45,7 +47,11 @@ def report(ctx, input, url, token, cn):
 @click.option('--url', required=False)
 @click.option('--token', default=None)
 @click.option('--cn', default=None)
-def extract(ctx, input, token, cn):
+@click.option('--data-dir', default='/tmp/data')
+def extract(ctx, input, url, token, cn, data_dir):
+    if not os.path.exists(data_dir):
+        os.mkdir(data_dir)
+
     _input = ''
     if url and token and cn:
         import requests
@@ -64,11 +70,11 @@ def extract(ctx, input, token, cn):
 
     pkidata = utils.VaultPKIObject(json.loads(_input))
 
-    with open('ca.pem', 'w') as fh:
+    with open(os.path.join(data_dir, 'ca.pem'), 'w') as fh:
         fh.write(pkidata.data.issuing_ca)
 
-    with open('cert.pem', 'w') as fh:
+    with open(os.path.join(data_dir, 'cert.pem'), 'w') as fh:
         fh.write(pkidata.data.certificate)
 
-    with open('cert-key.pem', 'w') as fh:
+    with open(os.path.join(data_dir, 'cert-key.pem'), 'w') as fh:
         fh.write(pkidata.data.private_key)
